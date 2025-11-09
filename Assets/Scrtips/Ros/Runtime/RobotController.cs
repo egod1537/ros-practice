@@ -7,7 +7,7 @@ namespace Main
     {
         [Required, SerializeField]
 
-        private RobotRidarController ridarController;
+        private RobotLidarController lidarController;
 
         [Required, SerializeField]
 

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Main
 {
     [Serializable]
-    public class RidarConfig
+    public class LidarConfig
     {
         public float updateIntervalSecond = 1f;
         public int raysPerSecond = 360;

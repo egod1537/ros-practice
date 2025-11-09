@@ -13,17 +13,20 @@ namespace Main
         [SerializeField]
         private ImuConfig config;
 
+        private RosIMUPublisher publisher;
+
         private float publishTimer;
         private float sampleTimer;
         private List<ImuData> imuDataBuffer = new List<ImuData>();
 
         private float currentAngularZ_rad_s = 0f;
 
-        public void SetAngularVelocity(float angularZ_rad_s)
+        private void Start()
         {
-            currentAngularZ_rad_s = angularZ_rad_s;
+            publisher = new();
         }
 
+        #region ========== Life Cycle ==========
         private void Update()
         {
             if (config == null || config.updateIntervalSecond <= 0 || config.samplesPerSecond <= 0)
@@ -42,7 +45,7 @@ namespace Main
             {
                 if (imuDataBuffer.Count > 0)
                 {
-                    onPublishData.Invoke(new List<ImuData>(imuDataBuffer));
+                    publisher.PublishTopic(new List<ImuData>(imuDataBuffer), Time.time);
                     imuDataBuffer.Clear();
                 }
                 publishTimer -= config.updateIntervalSecond;
@@ -52,7 +55,7 @@ namespace Main
         private void SampleImuData()
         {
             Quaternion unityOrientation = transform.rotation;
-            Vector3 unityAngularVelocity = new Vector3(0, currentAngularZ_rad_s, 0); 
+            Vector3 unityAngularVelocity = new Vector3(0, currentAngularZ_rad_s, 0);
             Vector3 unityLinearAcceleration = Vector3.up * config.gravity;
 
             ImuData data = new ImuData
@@ -61,8 +64,14 @@ namespace Main
                 angularVelocity = ToRosVector3(unityAngularVelocity),
                 linearAcceleration = ToRosVector3(unityLinearAcceleration)
             };
-            
+
             imuDataBuffer.Add(data);
+        }
+        #endregion ========================
+
+        public void SetAngularVelocity(float angularZ_rad_s)
+        {
+            currentAngularZ_rad_s = angularZ_rad_s;
         }
 
         private Vector3 ToRosVector3(Vector3 v)

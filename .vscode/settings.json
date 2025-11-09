@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "ros-practice.sln"
+    "dotnet.defaultSolution": "ros-practice.sln",
+    "editor.formatOnSave": true
 }

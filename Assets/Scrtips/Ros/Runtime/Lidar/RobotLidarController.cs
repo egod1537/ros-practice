@@ -5,25 +5,28 @@ using System.Collections.Generic;
 
 namespace Main
 {
-    public class RobotRidarController : MonoBehaviour
+    public class RobotLidarController : MonoBehaviour
     {
-        #region ========== Event ==========
-        public UnityEvent<List<RidarData>> onPublishData = new();
-        #endregion ========================
-
         #region ========== Constant ==========
         [SerializeField]
-        private RidarConfig config;
+        private LidarConfig config;
         #endregion ===========================
 
-        [Required, SerializeField] 
+        [Required, SerializeField]
         private Transform trTip;
+
+        private RosLidarPublisher publisher;
 
         float timer;
         float currentAngle;
-        
+
         float scanTimer;
-        private List<RidarData> scanDataBuffer = new List<RidarData>();
+        private List<LidarData> scanDataBuffer = new List<LidarData>();
+
+        private void Start()
+        {
+            publisher = new();
+        }
 
         private void Update()
         {
@@ -43,13 +46,13 @@ namespace Main
                 Vector3 direction = trTip.forward;
                 UpdateRadar(direction, currentAngle);
             }
-            
+
             scanTimer += Time.deltaTime;
             if (scanTimer >= config.updateIntervalSecond)
             {
                 if (scanDataBuffer.Count > 0)
                 {
-                    onPublishData.Invoke(new List<RidarData>(scanDataBuffer));
+                    publisher.PublishTopic(new List<LidarData>(scanDataBuffer), Time.time, config.updateIntervalSecond);
                     scanDataBuffer.Clear();
                 }
                 scanTimer -= config.updateIntervalSecond;
@@ -61,18 +64,18 @@ namespace Main
             var origin = trTip.position;
             float distance;
 
-            if (Physics.Raycast(origin, direction, out var hit, RidarConfig.range, config.mask))
+            if (Physics.Raycast(origin, direction, out var hit, LidarConfig.range, config.mask))
             {
                 Debug.DrawLine(origin, hit.point, Color.red, 0.1f);
                 distance = hit.distance;
             }
             else
             {
-                Debug.DrawRay(origin, direction * RidarConfig.range, Color.green, 0.1f);
+                Debug.DrawRay(origin, direction * LidarConfig.range, Color.green, 0.1f);
                 distance = float.PositiveInfinity;
             }
-            
-            scanDataBuffer.Add(new RidarData { angleDeg = angleDeg, distance = distance });
+
+            scanDataBuffer.Add(new LidarData { angleDeg = angleDeg, distance = distance });
         }
     }
 }

@@ -2,7 +2,8 @@ using UnityEngine;
 
 namespace Main
 {
-    public struct RidarData{
+    public struct LidarData
+    {
         public float angleDeg;
         public float distance;
     }
