@@ -72,7 +72,7 @@ namespace Main
             else
             {
                 Debug.DrawRay(origin, direction * LidarConfig.range, Color.green, 0.1f);
-                distance = float.PositiveInfinity;
+                distance = 0.0f;
             }
 
             scanDataBuffer.Add(new LidarData { angleDeg = angleDeg, distance = distance });

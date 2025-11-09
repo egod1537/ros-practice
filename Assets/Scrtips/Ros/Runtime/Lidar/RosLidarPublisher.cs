@@ -14,7 +14,7 @@ namespace Main
         private const string TOPIC_NAME = "/scan";
         private const string FROM_ID = "lidar_link";
         private const float RANGE_MIN = 0.1f;
-        private const float RANGE_MAX = float.MaxValue;
+        private const float RANGE_MAX = 1000.0f;
 
         private ROSConnection ros;
         private float[] rangesBuffer;
