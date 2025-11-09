@@ -160,6 +160,7 @@ GameObject:
   - component: {fileID: 8518098033961918690}
   - component: {fileID: 1330313191334451079}
   - component: {fileID: 1857528886657528453}
+  - component: {fileID: 8889065849991740796}
   m_Layer: 0
   m_Name: Robot
   m_TagString: Untagged
@@ -196,8 +197,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f4e81795cae3b8458d6f229f879c2d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ridarController: {fileID: 7462052594450779068}
+  lidarController: {fileID: 7462052594450779068}
   imuController: {fileID: 2340038708963271731}
+  odometryController: {fileID: 8889065849991740796}
 --- !u!114 &2340038708963271731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,6 +277,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 808f6100792368e4da404275cbf62729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotController: {fileID: 8167319808950150843}
+--- !u!114 &8889065849991740796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7000253503567259492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f271f3cbe855c266888270103b152f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8104661789946449580
@@ -428,9 +443,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf4fb52f4635d14287acd4309c3bb59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onPublishData:
-    m_PersistentCalls:
-      m_Calls: []
   config:
     updateIntervalSecond: 1
     raysPerSecond: 360

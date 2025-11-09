@@ -15,8 +15,6 @@ namespace Main
 
         private static readonly double[] k_PerfectCovariance = new double[9] { 1e-6, 0, 0, 0, 1e-6, 0, 0, 0, 1e-6 };
 
-        private uint seq = 0;
-
         private ROSConnection ros;
 
         public RosIMUPublisher()

@@ -12,6 +12,9 @@ namespace Main
         [Required, SerializeField]
 
         private RobotIMUController imuController;
+        [Required, SerializeField]
+
+        private RobotOdometryController odometryController;
 
         private float currentLinearVelocity;
         private float currentAngularVelocity;
